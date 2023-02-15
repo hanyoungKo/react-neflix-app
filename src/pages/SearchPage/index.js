@@ -4,31 +4,37 @@ import axios from '../../api/axios';
 import "./SearchPage.css";
 
 function SearchPage() {
-
+  /* state */
   const [searchResults, setSearchResults] = useState([]);
-
+ 
+  /* Routing */
   const useQuery = () => {
+    console.log("data:",useLocation());
     return new URLSearchParams(useLocation().search);
   }
 
   let query = useQuery();
   const searchTerm = query.get("q");
 
+  /* request hooks */
+  const fetchSearchMovie =  async (searchTerm)=>{
+    try{
+      const request = await axios.get(`/search/multi?include_adult=false&query=${searchTerm}`)
+    
+      setSearchResults(request.data.results)
+    }catch (error){
+      console.log(error)
+    }
+  }
+
+  /* 최적화 */
   useEffect(() => {
     if(searchTerm){
       fetchSearchMovie(searchTerm);
     }
   }, [searchTerm]);
 
-  const fetchSearchMovie =  async (searchTerm)=>{
-    try{
-      const request = await axios.get(`/search/multi?include_adult=false&query=${searchTerm}`)
-      console.log(request);
-      setSearchResults(request.data.results)
-    }catch (error){
-      console.log(error)
-    }
-  }
+
 
   const renderSearchResults = () =>{
     return searchResults.length > 0 ? (
@@ -38,7 +44,7 @@ function SearchPage() {
             const movieImageUrl = "https://image.tmdb.org/t/p/w500" + movie.backdrop_path;
         
             return(
-              <div className='movie'>
+              <div className='movie' key={movie.id}>
                 <div className='movie_colmn-poster'>
                   <img src={movieImageUrl} alt="movie_image" className='movie_poster'/>
                 </div>

@@ -25,7 +25,7 @@ function MovieModal({
                     <div className='modal_content'>
                         <p className='modal_details'>
                             <span className='modal_user_perc'>
-                                100% for you
+                                { `${Math.floor(Math.random()*60 + 41)}% for you`}
                             </span>
                             { release_date ? release_date : first_air_date}
                         </p>

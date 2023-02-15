@@ -28,6 +28,7 @@ function Row({title, id, fetchUrl, isLargeRow}) {
     const handleClick = (movie) =>{
         setModalOpen(true);
         setMovieSelected(movie)
+        
     }
 
     return (
@@ -66,9 +67,12 @@ function Row({title, id, fetchUrl, isLargeRow}) {
             {
                 modalOpen &&  (
                     <MovieModal {...movieSelected} setModalOpen={setModalOpen}></MovieModal>
-                )
-
+                    
+                    )
+                
             }
+            
+        
         </section>
   )
 }

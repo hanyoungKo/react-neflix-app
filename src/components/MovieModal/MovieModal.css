@@ -30,8 +30,9 @@
     font-size: 20px;
     line-height: 1.5;
   }
-  .modal_user-perc {
+  .modal_user_perc {
     color: #46d369;
+    margin-right: 5px;
   }
   .modal::-webkit-scrollbar {
     display: none;
@@ -62,7 +63,9 @@
     cursor: pointer;
     z-index: 1000;
     color: white;
-    border: 2px solid white;
+    font-weight: bold;
+    font-size: 20px;
+
   }
   
   @media screen and (max-height: 768px) {

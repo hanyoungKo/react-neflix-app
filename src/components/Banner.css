@@ -100,7 +100,7 @@
   .banner_button {
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    /* justify-content: start; */
     align-items: center;
     cursor: pointer;
     outline: none;
