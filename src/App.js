@@ -1,24 +1,35 @@
-import logo from './logo.svg';
+
+import { Nav } from './components/Nav';
 import './App.css';
+import Footer from './components/Footer';
+import {Outlet, Route, Routes} from 'react-router-dom'
+import MainPage from './pages/MainPange';
+import DetailPage from './pages/DetailPage';
+import SearchPage from './pages/SearchPage';
+
+
+const Layout = ()=>{
+  return(
+    <div>
+      <Nav/>
+      <Outlet/>
+      <Footer/>
+    </div>
+  )
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <div className="App">
+    <Routes>
+      <Route path='/' element={<Layout/>}>
+          <Route index element={<MainPage/>}></Route>
+          <Route path=':movieId' element={<DetailPage/>}></Route>
+          <Route path='search' element={<SearchPage/>}></Route>
+      </Route>
+    </Routes>
+    
+</div>
   );
 }
 
