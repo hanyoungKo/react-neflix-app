@@ -8,6 +8,7 @@ export const Nav = () => {
     const [show,setShow] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     
+    /* Routing */
     const navigate = useNavigate();
 
     /* 최적화 */

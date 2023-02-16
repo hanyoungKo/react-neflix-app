@@ -19,7 +19,7 @@
   }
   @media (max-width: 768px) {
     .banner_contents {
-      width: min-content !important;
+      width: auto !important;
       padding-left: 2.3rem;
       margin-left: 0px !important;
     }

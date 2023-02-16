@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import axios from '../../api/axios';
+import { useDebounce } from '../../hooks/useDebounce';
 import "./SearchPage.css";
 
 function SearchPage() {
@@ -15,12 +16,16 @@ function SearchPage() {
 
   let query = useQuery();
   const searchTerm = query.get("q");
+  const debounceSearchTerm = useDebounce(searchTerm,500);
+
+  const navigate = useNavigate();
 
   /* request hooks */
-  const fetchSearchMovie =  async (searchTerm)=>{
+  const fetchSearchMovie =  async (searchData)=>{
     try{
-      const request = await axios.get(`/search/multi?include_adult=false&query=${searchTerm}`)
-    
+      const request = await axios.get(`/search/multi?include_adult=false&query=${searchData}`)
+      console.log(request);
+
       setSearchResults(request.data.results)
     }catch (error){
       console.log(error)
@@ -29,11 +34,10 @@ function SearchPage() {
 
   /* 최적화 */
   useEffect(() => {
-    if(searchTerm){
-      fetchSearchMovie(searchTerm);
+    if(debounceSearchTerm){
+      fetchSearchMovie(debounceSearchTerm);
     }
-  }, [searchTerm]);
-
+  }, [debounceSearchTerm]);
 
 
   const renderSearchResults = () =>{
@@ -45,7 +49,7 @@ function SearchPage() {
         
             return(
               <div className='movie' key={movie.id}>
-                <div className='movie_colmn-poster'>
+                <div className='movie_colmn-poster' onClick={()=> navigate(`/${movie.id}`)}>
                   <img src={movieImageUrl} alt="movie_image" className='movie_poster'/>
                 </div>
               </div>
@@ -59,7 +63,7 @@ function SearchPage() {
       <section className='no-results'>
         <div className='no-results_text'>
           <p>
-             찾으시는 검색어 "{searchTerm}" 에 맞는 영화를 찾을 수 없습니다.
+             찾으시는 검색어 "{debounceSearchTerm}" 에 맞는 영화를 찾을 수 없습니다.
           </p>  
         </div>
 
